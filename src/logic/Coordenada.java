@@ -18,6 +18,7 @@ public void mover(double distancia,double angulo){
 	this.x=this.x+distancia*Math.sin(angulo);
 	this.y=this.y+distancia*Math.cos(angulo);
 }
+
 public double getX() {
 	return x;
 }

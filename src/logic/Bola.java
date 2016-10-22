@@ -1,5 +1,6 @@
 package logic;
 
+import java.awt.Color;
 import java.util.Random;
 
 public class Bola extends Thread {
@@ -9,16 +10,34 @@ public class Bola extends Thread {
 	private double velocidad;//pixel /segundos
 	private Area area;
 	private static final int DISTANCIA=2;
-	
-	
+	private Genero genero;
+	private Clase clase;
+	private Color color;
+
+
 	public Bola(Coordenada coordenada, int tama, double direccion,
 			double velocidad, Area area) {
-	
+
 		this.coordenada = coordenada;
 		this.tama = tama;
-		this.direccion = direccion;
+		this.direccion = direccion; 
 		this.velocidad = velocidad;
 		this.area = area;
+		this.genero=Genero.aleatorioGenero();
+		this.clase=Clase.aleatorioClase();
+		elegirColor();
+
+	}
+	private void  elegirColor(){
+		switch (clase) {
+		case TROPUS:
+				color=Color.YELLOW;
+			break;
+
+		case INOPIOS:
+				color=Color.GREEN;
+			break;
+		}
 	}
 	public void run() {
 		Random random=new Random();
@@ -28,15 +47,25 @@ public class Bola extends Thread {
 				coordenada.mover(DISTANCIA,direccion);
 				if(!this.area.coordenadaAdentro(coordenada,this)){//esta afuera
 					this.direccion+=random.nextDouble()*Math.PI;			
-				}
-//				System.out.println(coordenada.getX()+" "+coordenada.getY());
-		
+				}		
+
 			} catch (InterruptedException e) {
-			
+
 				e.printStackTrace();
 			}
-		
+
 		}
+	}
+	/**
+	 * Metodo que comprueba si hubo colision entre dos agentes
+	 * @param bola
+	 * @return
+	 */
+	public boolean colision(Bola bola) {	
+		return coordenada.getX()+tama>=bola.getCoordenada().getX() 
+				&& coordenada.getX()+tama<=bola.getCoordenada().getX()+bola.getTama()
+				&& coordenada.getY()+tama>=bola.getCoordenada().getY() 
+				&& coordenada.getY()+tama<=bola.getCoordenada().getY()+bola.getTama();
 	}
 	public Coordenada getCoordenada() {
 		return coordenada;
@@ -68,9 +97,26 @@ public class Bola extends Thread {
 	public void setArea(Area area) {
 		this.area = area;
 	}
-	
+	public Genero getGenero() {
+		return genero;
+	}
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
+	public Clase getClase() {
+		return clase;
+	}
+	public void setClase(Clase clase) {
+		this.clase = clase;
+	}
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 
-	
-	
+
+
 }
