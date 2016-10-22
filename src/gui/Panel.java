@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import logic.Bola;
 
+
 @SuppressWarnings("serial")
 public class Panel extends JPanel implements Runnable {
 	private ArrayList<Bola> bola;
@@ -18,10 +19,15 @@ public class Panel extends JPanel implements Runnable {
 		// TODO Auto-generated method stub		
 		g.clearRect(0,0,1000,1000);
 		for (int i = 0; i < bola.size(); i++) {		
-				Bola bol=bola.get(i);
+			Bola bol=bola.get(i);
+			if(bol.murio())
+				bola.remove(i);
+			else{
 				g.setColor(bol.getColor());
 				g.fillOval((int)bol.getCoordenada().getX(),(int)bol.getCoordenada().getY(),bol.getTama(),bol.getTama());
-			
+
+			}
+
 		}
 
 	}
@@ -31,16 +37,20 @@ public class Panel extends JPanel implements Runnable {
 		Bola bola1=null;
 		Bola bola2=null;
 		while(true){
-			for (int i = 0; i < bola.size(); i++) {
-				bola1=bola.get(i);
-				for (int j = 0; j < bola.size(); j++) {
-					bola2=bola.get(j);
-					//					if(bola1.colision(bola2) && i!=j)
+			try{
+				for (int i = 0; i < bola.size(); i++) {
+					bola1=bola.get(i);
+					for (int j = 0; j < bola.size(); j++) {
+						bola2=bola.get(j);
+						//					if(bola1.colision(bola2) && i!=j)
 
 
+					}
 				}
+				repaint();
+			}catch (Exception e) {
+				// TODO: handle exception
 			}
-			repaint();	
 		}		
 	}
 }

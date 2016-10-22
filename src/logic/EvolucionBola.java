@@ -1,4 +1,7 @@
 package logic;
+
+import javax.swing.JOptionPane;
+
 public class EvolucionBola extends Thread{
 	private Bola bola;
 	private static final int TIEMPO=6000;
@@ -7,38 +10,42 @@ public class EvolucionBola extends Thread{
 	public EvolucionBola(Bola bola) {
 		// TODO Auto-generated constructor stub
 		this.bola=bola;
-		this.evolucion=Evolucion.NACE;
+		this.evolucion=Evolucion.aleatorioEvolucion();
+
 		this.comenzar=true;
 	}
+	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		super.run();
 		while(comenzar){
 			try {
-				
-				for (Evolucion evol:Evolucion.values()) {	
-					switch (evol) {
+
+				for (Evolucion evol:Evolucion.values()) {
+					addTam();
+					Thread.sleep(TIEMPO);
+					switch (evolucion) {
 					case NACE:
-						evolucion=Evolucion.INFANCIA;
+						evolucion=Evolucion.INFANCIA;						
 						break;	
 					case INFANCIA:
-						evolucion=Evolucion.ADOLECENCIA;
+						evolucion=Evolucion.ADOLECENCIA;					
 						break;
 					case ADOLECENCIA:
 						evolucion=Evolucion.ADULTOS;
+
 						break;
 					case ADULTOS:
-						evolucion=Evolucion.VEJEZ;
+						evolucion=Evolucion.VEJEZ;						
 						break;
-					case VEJEZ:
-						evolucion=Evolucion.MUERE;
+					case VEJEZ:						
+						evolucion=Evolucion.MUERE;					
 						break;
-					case MUERE:
+					case MUERE:				
 						comenzar=false;
 						break;
 					}
-					Thread.sleep(TIEMPO);
 				}
 
 			} catch (InterruptedException e) {
@@ -46,6 +53,33 @@ public class EvolucionBola extends Thread{
 				e.printStackTrace();
 			}
 		}
+	}
+	/**
+	 * este metodo fuerza a cambiar de evolucion
+	 * @param evolucion
+	 */
+
+	private void addTam(){
+		switch (evolucion) {
+		case NACE:
+			bola.setTama(5);			
+			break;	
+		case INFANCIA:
+			bola.setTama(15);		
+			break;
+		case ADOLECENCIA:
+			bola.setTama(25);		
+			break;
+		case ADULTOS:
+			bola.setTama(35);			
+			break;
+		case VEJEZ:
+			bola.setTama(45);		
+			break;		
+		}
+	}
+	public void cambioEvolucion(Evolucion evolucion){
+		this.evolucion=evolucion;
 	}
 	public Bola getBola() {
 		return bola;

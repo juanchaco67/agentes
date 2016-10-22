@@ -16,9 +16,9 @@ public class BolaListener {
 		// TODO Auto-generated constructor stub
 		Random random =new Random();
 		this.bola=new ArrayList<Bola>();
-		for (int i = 0; i < bola.size(); i++) {
-			bola.add(new Bola(new Coordenada(random.nextDouble()*600,random.nextDouble()*400),random.nextInt(15)+5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 600, new Coordenada(0, 0))));
-			bola[i].start();
+		for (int i = 0; i < 100; i++) {
+			bola.add(new Bola(new Coordenada(random.nextDouble()*600,random.nextDouble()*400),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 600, new Coordenada(0, 0))));
+			bola.get(i).start();
 		}
 		ventana=new Ventana(bola);		
 	}
