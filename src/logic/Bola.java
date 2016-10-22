@@ -13,6 +13,8 @@ public class Bola extends Thread {
 	private Genero genero;
 	private Clase clase;
 	private Color color;
+	private EvolucionBola evolucion;
+	private Edad edad;
 
 
 	public Bola(Coordenada coordenada, int tama, double direccion,
@@ -26,7 +28,11 @@ public class Bola extends Thread {
 		this.genero=Genero.aleatorioGenero();
 		this.clase=Clase.aleatorioClase();
 		elegirColor();
-
+		this.evolucion=new EvolucionBola(this);
+		this.edad=new Edad(this);
+		this.edad.start();
+		this.evolucion.start();
+		
 	}
 	private void  elegirColor(){
 		switch (clase) {
