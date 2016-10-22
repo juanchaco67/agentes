@@ -1,0 +1,31 @@
+package gui;
+
+import javax.swing.JFrame;
+import logic.Bola;
+
+
+public class Ventana extends JFrame{
+	private Panel panel;
+	private Bola bola[];
+	private   Thread thread;
+	public Ventana(Bola bola[]) {
+		// TODO Auto-generated constructor stub
+		this.bola=bola;
+		setSize(800, 600);	
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		iniciar();
+		this.setVisible(true);
+	}
+	public void iniciar(){
+
+		panel = new Panel(bola);
+		thread=new Thread(panel);
+
+		getContentPane().setLayout(null);
+		getContentPane().add(panel);
+		thread.start();
+
+
+	}
+}
