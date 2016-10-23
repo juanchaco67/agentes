@@ -30,7 +30,7 @@ public class ContextoAlicanola extends Thread{
 			try {
 				Thread.sleep(TIMEPO_APARECER);
 				for (int i = 0; i <random.nextInt(4)+1; i++) {
-					Alicanola alicanola=new Alicanola(20+random.nextInt( (100+1) - 20),random.nextDouble()*2.0+0.8,new Coordenada(random.nextDouble()*600,random.nextDouble()*400));
+					Alicanola alicanola=new Alicanola(20+random.nextInt( (100+1) - 20),random.nextDouble(),new Coordenada(random.nextDouble()*800,random.nextDouble()*750));
 					alicanolas.add(alicanola);
 					alicanola.start();
 				}
@@ -47,8 +47,8 @@ public class ContextoAlicanola extends Thread{
 	public void eliminarFisfirifuna(int posicion){
 		fisfirufas.remove(posicion);
 	}
-	public void crearFIsfirufas(Alicanola alicanola){
-		fisfirufas.add(new Fisfirufa(5,new Coordenada(alicanola.getCoordenada().getX(),alicanola.getCoordenada().getY())));
+	public void crearFIsfirufas(){
+		fisfirufas.add(new Fisfirufa(10,new Coordenada(random.nextDouble()*800,random.nextDouble()*750)));
 	}
 
 	public ArrayList<Bola> getBolas() {

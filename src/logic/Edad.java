@@ -15,6 +15,7 @@ public class Edad extends Thread {
 		while(true){			
 			try {
 				edad+=1;
+				bola.setTama(bola.getTama()+1);
 				Thread.sleep(TIEMPO);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

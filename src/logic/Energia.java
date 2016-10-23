@@ -1,35 +1,45 @@
 package logic;
 
+import java.util.Random;
+
 public class Energia extends Thread{
 	private int cantidadInicial;
-	private int cantidadCambiante;
 	private int cantidadTotal;
+	private Random random;
+	private boolean activar;
 	public Energia(int cantidadInicial, int cantidadCambiante) {
 		super();
 		this.cantidadInicial = cantidadInicial;
-		this.cantidadCambiante = cantidadCambiante;
+		this.random=new Random();
+		this.activar=false;
+		this.cantidadTotal=cantidadInicial+cantidadCambiante;
+
 	}
 
-	@SuppressWarnings("unused")
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		super.run();
-		int aux=0;
+	
 		while(true){
-			cantidadTotal=cantidadInicial+cantidadCambiante;
-			if(cantidadInicial<cantidadTotal){
-				cantidadTotal--;				
-				try {
-					
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+			try {
+				if(cantidadInicial<cantidadTotal)
+					cantidadTotal-=1;	
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		
+
 		}
+	}
+	public void adicionarEnergia(){
+		this.cantidadTotal=cantidadInicial+(20+random.nextInt( (100+1) - 20));
+	}
+	public void disminuirEnergia(){
+		this.cantidadInicial-=5;
 	}
 
 	public int getCantidadInicial() {
@@ -40,14 +50,6 @@ public class Energia extends Thread{
 		this.cantidadInicial = cantidadInicial;
 	}
 
-	public int getCantidadCambiante() {
-		return cantidadCambiante;
-	}
-
-	public void setCantidadCambiante(int cantidadCambiante) {
-		this.cantidadCambiante = cantidadCambiante;
-	}
-
 	public int getCantidadTotal() {
 		return cantidadTotal;
 	}
@@ -55,6 +57,14 @@ public class Energia extends Thread{
 	public void setCantidadTotal(int cantidadTotal) {
 		this.cantidadTotal = cantidadTotal;
 	}
-	
-	
+
+	public boolean isActivar() {
+		return activar;
+	}
+
+	public void setActivar(boolean activar) {
+		this.activar = activar;
+	}
+
+
 }

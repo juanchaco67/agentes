@@ -23,7 +23,7 @@ public class BolaListener {
 		this.alicanolas=new ArrayList<Alicanola>();
 		this.fisfirufas=new ArrayList<Fisfirufa>();
 		for (int i = 0; i < 100; i++) {
-			bola.add(new Bola(new Coordenada(random.nextDouble()*600,random.nextDouble()*400),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 600, new Coordenada(0, 0))));
+			bola.add(new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 750, new Coordenada(0, 0)),(byte)1));
 			bola.get(i).start();
 		}
 		ventana=new Ventana(bola,alicanolas,fisfirufas);		

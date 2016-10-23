@@ -1,14 +1,22 @@
 package logic;
 
+import java.util.Random;
+
 public class Alicanola extends Thread{
 	private int energia;
 	private double radio;
 	private Coordenada coordenada;
+	private double velocidad;//pixel /segundos
+	private static final double DISTANCIA=1;
+	private Random random;
 
 	public Alicanola(int energia, double radio, Coordenada coordenada) {
 		super();
+		this.random=new Random();
+		this.velocidad=100+random.nextDouble()*400;
 		this.energia = energia;
 		this.radio= radio;
+	
 		this.coordenada = coordenada;
 		
 	}
@@ -18,32 +26,41 @@ public class Alicanola extends Thread{
 	 * @return
 	 */
 	public boolean colision(Bola bola) {	
-		return coordenada.getX()+crecimiento()>=bola.getCoordenada().getX() 
-				&& coordenada.getX()+crecimiento()<=bola.getCoordenada().getX()+bola.getTama()
-				&& coordenada.getY()+crecimiento()>=bola.getCoordenada().getY() 
-				&& coordenada.getY()+crecimiento()<=bola.getCoordenada().getY()+bola.getTama();
+		return coordenada.getX()+radio*2>bola.getCoordenada().getX() 
+				&& coordenada.getX()+radio*2<bola.getCoordenada().getX()+bola.getTama()
+				&& coordenada.getY()+radio*2>bola.getCoordenada().getY() 
+				&& coordenada.getY()+radio*2<bola.getCoordenada().getY()+bola.getTama();
 	}
-	/**
-	 * este  metodo cambia el tamaño de la alicanola radialmente
-	 */
-	public double crecimiento(){
-		return Math.PI+this.radio;
-	}
+
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
+		System.out.println("radio "+(radio+(velocidad/velocidadAngular()))+" ");
 		super.run();
 		while(true){
 			
 			try {
-				radio+=0.5;
-				Thread.sleep(500);
+				radio+=(velocidad/velocidadAngular());
+				Thread.sleep((long) tiempo());
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public double getRadio() {
+		return radio;
+	}
+	public void setRadio(double radio) {
+		this.radio = radio;
+	}
+	public double velocidadAngular(){
+		return velocidad/radio;
+	}
+	public double tiempo(){
+		return (DISTANCIA*1000/velocidad)*1000;
 	}
 	
 	public int getEnergia() {

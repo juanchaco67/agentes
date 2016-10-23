@@ -2,14 +2,16 @@ package logic;
 
 public class EvolucionBola extends Thread{
 	private Bola bola;
-	private static final int TIEMPO=10000;
+	private static final int TIEMPO=20000;
 	private Evolucion evolucion;
 	private boolean comenzar;
-	public EvolucionBola(Bola bola) {
+	public EvolucionBola(Bola bola,byte opcion) {
 		// TODO Auto-generated constructor stub
 		this.bola=bola;
-		this.evolucion=Evolucion.aleatorioEvolucion();
-
+		if(opcion==1)
+			this.evolucion=Evolucion.aleatorioEvolucion();
+		else
+			this.evolucion=Evolucion.NACE;
 		this.comenzar=true;
 	}
 
@@ -25,7 +27,7 @@ public class EvolucionBola extends Thread{
 					addTam();
 					Thread.sleep(TIEMPO);
 					switch (evolucion) {
-					case NACE:
+					case NACE:						
 						evolucion=Evolucion.INFANCIA;						
 						break;	
 					case INFANCIA:
@@ -62,19 +64,24 @@ public class EvolucionBola extends Thread{
 	private void addTam(){
 		switch (evolucion) {
 		case NACE:
-			bola.setTama(5);			
+			bola.getEdad().setEdad(1);
+			bola.setTama(bola.getTama()+5);			
 			break;	
 		case INFANCIA:
-			bola.setTama(15);		
+			bola.getEdad().setEdad(10);
+			bola.setTama(bola.getTama()+10);		
 			break;
 		case ADOLECENCIA:
-			bola.setTama(25);		
+			bola.getEdad().setEdad(20);
+			bola.setTama(bola.getTama()+15);		
 			break;
 		case ADULTOS:
-			bola.setTama(35);			
+			bola.getEdad().setEdad(30);
+			bola.setTama(bola.getTama()+20);			
 			break;
 		case VEJEZ:
-			bola.setTama(45);		
+			bola.getEdad().setEdad(40);
+			bola.setTama(bola.getTama()+25);		
 			break;		
 		}
 	}
