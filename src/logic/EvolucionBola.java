@@ -1,10 +1,8 @@
 package logic;
 
-import javax.swing.JOptionPane;
-
 public class EvolucionBola extends Thread{
 	private Bola bola;
-	private static final int TIEMPO=6000;
+	private static final int TIEMPO=10000;
 	private Evolucion evolucion;
 	private boolean comenzar;
 	public EvolucionBola(Bola bola) {
@@ -14,7 +12,8 @@ public class EvolucionBola extends Thread{
 
 		this.comenzar=true;
 	}
-	@SuppressWarnings("static-access")
+
+	@SuppressWarnings("unused")
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -59,6 +58,7 @@ public class EvolucionBola extends Thread{
 	 * @param evolucion
 	 */
 
+	@SuppressWarnings("incomplete-switch")
 	private void addTam(){
 		switch (evolucion) {
 		case NACE:
