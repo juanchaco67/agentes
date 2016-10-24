@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Energia extends Thread{
 	private int cantidadInicial;
-	private int cantidadTotal;
+	private int cantidadAdicional;
 	private Random random;
 	private boolean activar;
 	public Energia(int cantidadInicial, int cantidadCambiante) {
@@ -12,8 +12,7 @@ public class Energia extends Thread{
 		this.cantidadInicial = cantidadInicial;
 		this.random=new Random();
 		this.activar=false;
-		this.cantidadTotal=cantidadInicial+cantidadCambiante;
-
+		this.cantidadAdicional=0;
 	}
 
 
@@ -23,23 +22,33 @@ public class Energia extends Thread{
 		super.run();
 	
 		while(true){
+			if(activar){
+				try {	
+					if(0<cantidadAdicional){
+						cantidadAdicional--;
+						cantidadInicial--;
+					}else{
+						activar=false;
+						cantidadAdicional=0;
+					}				
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-			try {
-				if(cantidadInicial<cantidadTotal)
-					cantidadTotal-=1;	
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-
 		}
+
+
 	}
 	public void adicionarEnergia(){
-		this.cantidadTotal=cantidadInicial+(20+random.nextInt( (100+1) - 20));
+		this.cantidadAdicional+=(20+random.nextInt( (100+1) - 20));
+		cantidadInicial=cantidadInicial+cantidadAdicional;
+
 	}
 	public void disminuirEnergia(){
-		this.cantidadInicial-=5;
+		this.cantidadInicial-=1;
 	}
 
 	public int getCantidadInicial() {
@@ -50,13 +59,15 @@ public class Energia extends Thread{
 		this.cantidadInicial = cantidadInicial;
 	}
 
-	public int getCantidadTotal() {
-		return cantidadTotal;
+	public int getCantidadAdicional() {
+		return cantidadAdicional;
 	}
 
-	public void setCantidadTotal(int cantidadTotal) {
-		this.cantidadTotal = cantidadTotal;
+
+	public void setCantidadAdicional(int cantidadAdicional) {
+		this.cantidadAdicional = cantidadAdicional;
 	}
+
 
 	public boolean isActivar() {
 		return activar;

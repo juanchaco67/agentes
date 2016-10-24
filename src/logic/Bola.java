@@ -65,44 +65,8 @@ public class Bola extends Thread {
 
 		}
 	}
-	/**
-	 * Metodo que comprueba si hubo colision entre dos agentes
-	 * @param bola
-	 * @return
-	 */
-	public boolean colision(Bola bola) {	
-		return coordenada.getX()+tama>=bola.getCoordenada().getX() 
-				&& coordenada.getX()+tama<=bola.getCoordenada().getX()+bola.getTama()
-				&& coordenada.getY()+tama>=bola.getCoordenada().getY() 
-				&& coordenada.getY()+tama<=bola.getCoordenada().getY()+bola.getTama();
-	}
-//	/**
-//	 * este metodo cambia el tamaño del agente de acuerdo a la evoucion por etapas 
-//	 */
-//	public void cambiarTama(){
-//		switch (evolucion.getEvolucion()) {
-//		case NACE:
-//			tama
-//			break;	
-//		case INFANCIA:
-//		
-//			break;
-//		case ADOLECENCIA:
-//		
-//			break;
-//		case ADULTOS:
-//			
-//			break;
-//		case VEJEZ:
-//		
-//			break;
-//		case MUERE:
-//		
-//			break;
-//		}
-//		}
-//	}
-//	
+
+
 	public boolean murio(){
 		return evolucion.getEvolucion()==Evolucion.MUERE;
 	}

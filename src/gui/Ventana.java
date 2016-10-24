@@ -76,7 +76,7 @@ public class Ventana extends JFrame implements VistaVentana{
 		// TODO Auto-generated method stub
 		Object dato[]={
 				bola.getEdad().getEdad(),
-				bola.getEnergia().getCantidadTotal(),
+				bola.getEnergia().getCantidadInicial(),
 				bola.getGenero(),
 				bola.getClase(),
 				bola.getEvolucion().getEvolucion()

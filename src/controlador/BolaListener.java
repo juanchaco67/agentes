@@ -22,7 +22,7 @@ public class BolaListener {
 		this.bola=new ArrayList<Bola>();
 		this.alicanolas=new ArrayList<Alicanola>();
 		this.fisfirufas=new ArrayList<Fisfirufa>();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 3; i++) {
 			bola.add(new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 750, new Coordenada(0, 0)),(byte)1));
 			bola.get(i).start();
 		}

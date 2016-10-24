@@ -19,24 +19,11 @@ public class Alicanola extends Thread{
 	
 		this.coordenada = coordenada;
 		
-	}
-	/**
-	 * Metodo que comprueba si hubo colision entre dos agentes
-	 * @param bola
-	 * @return
-	 */
-	public boolean colision(Bola bola) {	
-		return coordenada.getX()+radio*2>bola.getCoordenada().getX() 
-				&& coordenada.getX()+radio*2<bola.getCoordenada().getX()+bola.getTama()
-				&& coordenada.getY()+radio*2>bola.getCoordenada().getY() 
-				&& coordenada.getY()+radio*2<bola.getCoordenada().getY()+bola.getTama();
-	}
-
-	
+	}	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub	
-		System.out.println("radio "+(radio+(velocidad/velocidadAngular()))+" ");
+		
 		super.run();
 		while(true){
 			

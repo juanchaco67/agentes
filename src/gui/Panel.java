@@ -1,6 +1,7 @@
 package gui;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -30,9 +31,9 @@ public class Panel extends JPanel implements Runnable {
 		this.contextoAlicanola.start();
 		this.vista=vista;
 		this.random=new Random();
-		
+
 	}
-	
+
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub		
 		g.clearRect(0,0,1000,1000);
@@ -54,7 +55,7 @@ public class Panel extends JPanel implements Runnable {
 			g.fillOval((int)alicanola.getCoordenada().getX(),(int)alicanola.getCoordenada().getY(),(int)alicanola.getRadio()*2,(int)alicanola.getRadio()*2);
 
 		}
-		
+
 
 		/**
 		 * dibujar agentes
@@ -99,7 +100,9 @@ public class Panel extends JPanel implements Runnable {
 					bola1=bola.get(i);
 					for (int j = 0; j < bola.size(); j++) {
 						bola2=bola.get(j);
-						if(bola1.colision(bola2) && i!=j){
+
+						if(colision((int)bola1.getCoordenada().getX(),(int)bola1.getCoordenada().getY(),(int)bola1.getTama(),
+								getBounds((int)bola2.getCoordenada().getX(),(int)bola2.getCoordenada().getY(),(int)bola2.getTama())) && i!=j){
 							/**
 							 *Si son diferente genero  y de la misma clase y estan en estapa adulto
 							 *generan un nuevo pisppirispi  de la misma clase
@@ -118,7 +121,7 @@ public class Panel extends JPanel implements Runnable {
 									&& bola2.getEvolucion().getEvolucion()==Evolucion.ADOLECENCIA
 									&& bola1.getGenero()==bola2.getGenero()
 									&& bola1.getClase()!=bola2.getClase()){
-								if(bola1.getEnergia().getCantidadTotal()<bola2.getEnergia().getCantidadTotal())
+								if(bola1.getEnergia().getCantidadInicial()<bola2.getEnergia().getCantidadInicial())
 									bola.remove(i);
 								else
 									bola.remove(j);
@@ -130,9 +133,11 @@ public class Panel extends JPanel implements Runnable {
 					 */
 					for (int h = 0; h < contextoAlicanola.getAlicanolas().size(); h++) {
 						Alicanola alicanola=contextoAlicanola.getAlicanolas().get(h);
-						if(alicanola.colision(bola1)){
+						if(colision((int)bola1.getCoordenada().getX(),(int)bola1.getCoordenada().getY(),bola1.getTama()
+								,getBounds((int)alicanola.getCoordenada().getX(),(int) alicanola.getCoordenada().getY(),(int) (alicanola.getRadio())))){
 							//aumentarla energia
-							bola1.getEnergia().setActivar(true);
+
+							bola1.getEnergia().setActivar(true);							
 							bola1.getEnergia().adicionarEnergia();
 							contextoAlicanola.crearFIsfirufas();
 							contextoAlicanola.eliminarALicanola(h);
@@ -143,20 +148,32 @@ public class Panel extends JPanel implements Runnable {
 					 */
 					for (int j = 0; j < contextoAlicanola.getFisfirufas().size(); j++) {
 						Fisfirufa fisfirufa=contextoAlicanola.getFisfirufas().get(j);
-						if(fisfirufa.colision(bola1)){
+						if(colision((int)bola1.getCoordenada().getX(),(int)bola1.getCoordenada().getY(),(int)bola1.getTama(),
+								getBounds((int)fisfirufa.getCoordenada().getX(),(int)fisfirufa.getCoordenada().getY(),(int)fisfirufa.getTam()))){
 							//aqui toka disminuir la energia de la bola	
 							bola1.getEnergia().disminuirEnergia();
 							if(bola1.getClase()==Clase.INOPIOS && bola1.getEvolucion().getEvolucion()==Evolucion.ADULTOS)
-									contextoAlicanola.eliminarFisfirifuna(j);							
+								contextoAlicanola.eliminarFisfirifuna(j);							
 						}
 					}
-					
+					/**
+					 * eliminar bola cunado tenga una energia de cero
+					 */
+					if(bola1.getEnergia().getCantidadInicial()<=0)
+						bola.remove(i);					
 				}
 				repaint();
 			}catch (Exception e) {
 				// TODO: handle exception
 			}
 		}		
+	}
+	private Rectangle getBounds(int x , int y,int diametro){
+		return new Rectangle(x,y,diametro,diametro);
+	}
+
+	private  boolean colision(int x,int y ,int diametro,Rectangle r){
+		return getBounds(x, y, diametro).intersects(r);
 	}
 	private void crearPispirispi(){
 		Bola bol=new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 750, new Coordenada(0, 0)),(byte)0);

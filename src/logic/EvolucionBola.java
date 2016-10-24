@@ -2,7 +2,7 @@ package logic;
 
 public class EvolucionBola extends Thread{
 	private Bola bola;
-	private static final int TIEMPO=20000;
+	private static final int TIEMPO=30000;
 	private Evolucion evolucion;
 	private boolean comenzar;
 	public EvolucionBola(Bola bola,byte opcion) {
