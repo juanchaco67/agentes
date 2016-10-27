@@ -1,8 +1,7 @@
 package test;
 
 
-import logic.Energia;
-import logic.Prueba;
+
 import controlador.BolaListener;
 
 public class Test {
