@@ -1,46 +1,45 @@
 package gui;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Random;
+import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
+import controlador.BolaListener;
 import logic.Alicanola;
-import logic.Area;
 import logic.Bola;
 import logic.Clase;
-import logic.Coordenada;
 import logic.Evolucion;
 import logic.Fisfirufa;
 import logic.Genero;
 
 
+
+
 @SuppressWarnings("serial")
-public class Panel extends JPanel implements Runnable {
-	private ArrayList<Bola> bola;
-	private ContextoAlicanola contextoAlicanola;
+public class Panel extends JPanel implements Runnable {	
 	private VistaVentana vista;
-	private Random random;
-	public Panel(ArrayList<Bola> bola,ArrayList<Alicanola>alicanolas,ArrayList<Fisfirufa>fisfirufas,VistaVentana vista) {
+	private BolaListener bolaListener;
+
+	public Panel(BolaListener bolaListener,VistaVentana vista) {
 		// TODO Auto-generated constructor stub
-		this.bola=bola;
+		this.bolaListener=bolaListener;
 		setBounds(0,0, 800, 600);
-		this.contextoAlicanola=new ContextoAlicanola(bola, fisfirufas, alicanolas);
-		this.contextoAlicanola.start();
+		ContextoAlicanola contextoAlicanola=new ContextoAlicanola(bolaListener);
+		contextoAlicanola.start();
 		this.vista=vista;
-		this.random=new Random();
-		
-	}
 	
+
+	}
+
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub		
 		g.clearRect(0,0,1000,1000);
 		/**
 		 * dibujar fisfirufas
 		 */
-		for (int i = 0; i < contextoAlicanola.getFisfirufas().size(); i++) {
-			Fisfirufa fisfirufa=contextoAlicanola.getFisfirufas().get(i);
+		for (int i = 0; i < bolaListener.getFisfirufas().size(); i++) {
+			Fisfirufa fisfirufa=bolaListener.getFisfirufas().get(i);
 			g.setColor(Color.BLACK);
 			g.fillOval((int)fisfirufa.getCoordenada().getX(),(int)fisfirufa.getCoordenada().getY(),fisfirufa.getTam(),fisfirufa.getTam());
 
@@ -48,23 +47,23 @@ public class Panel extends JPanel implements Runnable {
 		/**
 		 * dibujar alicanola
 		 */
-		for (int i = 0; i < contextoAlicanola.getAlicanolas().size(); i++) {
-			Alicanola alicanola=contextoAlicanola.getAlicanolas().get(i);
+		for (int i = 0; i < bolaListener.getAlicanolas().size(); i++) {
+			Alicanola alicanola=bolaListener.getAlicanolas().get(i);
 			g.setColor(Color.ORANGE);
 			g.fillOval((int)alicanola.getCoordenada().getX(),(int)alicanola.getCoordenada().getY(),(int)alicanola.getRadio()*2,(int)alicanola.getRadio()*2);
 
 		}
-		
+
 
 		/**
 		 * dibujar agentes
 		 */
 		vista.eliminarDatos();
-		for (int i = 0; i < bola.size(); i++) {	
+		for (int i = 0; i < bolaListener.getBola().size(); i++) {	
 
-			Bola bol=bola.get(i);
+			Bola bol=bolaListener.getBola().get(i);
 			if(bol.murio()){				
-				bola.remove(i);
+				bolaListener.getBola().remove(i);
 			}else{
 				if(bol.getGenero()==Genero.HEMBRA){
 					vista.addTabla(bol);
@@ -95,11 +94,13 @@ public class Panel extends JPanel implements Runnable {
 				/**
 				 * colision entre bolas
 				 */
-				for (int i = 0; i < bola.size(); i++) {
-					bola1=bola.get(i);
-					for (int j = 0; j < bola.size(); j++) {
-						bola2=bola.get(j);
-						if(bola1.colision(bola2) && i!=j){
+				for (int i = 0; i < bolaListener.getBola().size(); i++) {
+					bola1=bolaListener.getBola().get(i);
+					for (int j = 0; j < bolaListener.getBola().size(); j++) {
+						bola2=bolaListener.getBola().get(j);
+
+						if(colision((int)bola1.getCoordenada().getX(),(int)bola1.getCoordenada().getY(),(int)bola1.getTama(),
+								getBounds((int)bola2.getCoordenada().getX(),(int)bola2.getCoordenada().getY(),(int)bola2.getTama())) && i!=j){
 							/**
 							 *Si son diferente genero  y de la misma clase y estan en estapa adulto
 							 *generan un nuevo pisppirispi  de la misma clase
@@ -108,7 +109,7 @@ public class Panel extends JPanel implements Runnable {
 									&& bola1.getClase()==bola2.getClase() 
 									&& bola1.getEvolucion().getEvolucion()==Evolucion.ADULTOS 
 									&& bola2.getEvolucion().getEvolucion()==Evolucion.ADULTOS){
-								crearPispirispi();
+								bolaListener.crearPispirispi(0);
 							}
 							/**
 							 * si son adolecentes y de igual  genero y diferente clase,morira el que 
@@ -118,39 +119,46 @@ public class Panel extends JPanel implements Runnable {
 									&& bola2.getEvolucion().getEvolucion()==Evolucion.ADOLECENCIA
 									&& bola1.getGenero()==bola2.getGenero()
 									&& bola1.getClase()!=bola2.getClase()){
-								if(bola1.getEnergia().getCantidadTotal()<bola2.getEnergia().getCantidadTotal())
-									bola.remove(i);
+								if(bola1.getEnergia().getCantidadInicial()<bola2.getEnergia().getCantidadInicial())
+									bolaListener.getBola().remove(i);
 								else
-									bola.remove(j);
+									bolaListener.getBola().remove(j);
 							}
 						}
 					}
 					/**
 					 * colision bola-alicanola
 					 */
-					for (int h = 0; h < contextoAlicanola.getAlicanolas().size(); h++) {
-						Alicanola alicanola=contextoAlicanola.getAlicanolas().get(h);
-						if(alicanola.colision(bola1)){
+					for (int h = 0; h < bolaListener.getAlicanolas().size(); h++) {
+						Alicanola alicanola=bolaListener.getAlicanolas().get(h);
+						if(colision((int)bola1.getCoordenada().getX(),(int)bola1.getCoordenada().getY(),bola1.getTama()
+								,getBounds((int)alicanola.getCoordenada().getX(),(int) alicanola.getCoordenada().getY(),(int) (alicanola.getRadio())))){
 							//aumentarla energia
-							bola1.getEnergia().setActivar(true);
+
+							bola1.getEnergia().setActivar(true);							
 							bola1.getEnergia().adicionarEnergia();
-							contextoAlicanola.crearFIsfirufas();
-							contextoAlicanola.eliminarALicanola(h);
+							bolaListener.crearFIsfirufas();
+							bolaListener.eliminarALicanola(h);
 						}
 					}			
 					/**
 					 * colision bola-fisfirufas
 					 */
-					for (int j = 0; j < contextoAlicanola.getFisfirufas().size(); j++) {
-						Fisfirufa fisfirufa=contextoAlicanola.getFisfirufas().get(j);
-						if(fisfirufa.colision(bola1)){
+					for (int j = 0; j < bolaListener.getFisfirufas().size(); j++) {
+						Fisfirufa fisfirufa=bolaListener.getFisfirufas().get(j);
+						if(colision((int)bola1.getCoordenada().getX(),(int)bola1.getCoordenada().getY(),(int)bola1.getTama(),
+								getBounds((int)fisfirufa.getCoordenada().getX(),(int)fisfirufa.getCoordenada().getY(),(int)fisfirufa.getTam()))){
 							//aqui toka disminuir la energia de la bola	
 							bola1.getEnergia().disminuirEnergia();
 							if(bola1.getClase()==Clase.INOPIOS && bola1.getEvolucion().getEvolucion()==Evolucion.ADULTOS)
-									contextoAlicanola.eliminarFisfirifuna(j);							
+								bolaListener.eliminarFisfirifuna(j);							
 						}
 					}
-					
+					/**
+					 * eliminar bola cunado tenga una energia de cero
+					 */
+					if(bola1.getEnergia().getCantidadInicial()<=0)
+						bolaListener.getBola().remove(i);					
 				}
 				repaint();
 			}catch (Exception e) {
@@ -158,23 +166,12 @@ public class Panel extends JPanel implements Runnable {
 			}
 		}		
 	}
-	private void crearPispirispi(){
-		Bola bol=new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 750, new Coordenada(0, 0)),(byte)0);
-		bol.start();
-		bola.add(bol);		
-	}
-	public ArrayList<Bola> getBola() {
-		return bola;
-	}
-	public void setBola(ArrayList<Bola> bola) {
-		this.bola = bola;
+	private Rectangle getBounds(int x , int y,int diametro){
+		return new Rectangle(x,y,diametro,diametro);
 	}
 
-	public ContextoAlicanola getContextoAlicanola() {
-		return contextoAlicanola;
-	}
-	public void setContextoAlicanola(ContextoAlicanola contextoAlicanola) {
-		this.contextoAlicanola = contextoAlicanola;
+	private  boolean colision(int x,int y ,int diametro,Rectangle r){
+		return getBounds(x, y, diametro).intersects(r);
 	}
 
 }

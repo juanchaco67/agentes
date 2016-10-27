@@ -1,31 +1,25 @@
 package gui;
 
 import java.awt.Toolkit;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-
-import logic.Alicanola;
+import controlador.BolaListener;
 import logic.Bola;
-import logic.Fisfirufa;
+
 
 
 @SuppressWarnings("serial")
 public class Ventana extends JFrame implements VistaVentana{
 	private Panel panel;
-	private ArrayList<Bola> bola;
-	private ArrayList<Alicanola>alicanolas;
-	private ArrayList<Fisfirufa>fisfirufas;
+
 	private Thread thread;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTable tabla;
 	private DefaultTableModel modelo;
-	public Ventana(ArrayList<Bola> bola,ArrayList<Alicanola>alicanolas,ArrayList<Fisfirufa>fisfirufas) {
+	private BolaListener  bolaListener;
+	public Ventana(BolaListener bolaListener) {
 		// TODO Auto-generated constructor stub
-		this.bola=bola;
-		this.fisfirufas=fisfirufas;
-		this.alicanolas=alicanolas;
+		this.bolaListener=bolaListener;
 		setTitle("SIMULACION DE AGENTES");
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width,(int) Toolkit.getDefaultToolkit().getScreenSize().height);
 		setLocationRelativeTo(null);
@@ -34,7 +28,7 @@ public class Ventana extends JFrame implements VistaVentana{
 		this.setVisible(true);
 	}
 	public void iniciar(){
-		panel = new Panel(bola,alicanolas,fisfirufas,this);
+		panel = new Panel(this.bolaListener,this);
 		jScrollPane1 = new javax.swing.JScrollPane();
 		tabla = new javax.swing.JTable();
 		modelo=new DefaultTableModel();
@@ -76,7 +70,7 @@ public class Ventana extends JFrame implements VistaVentana{
 		// TODO Auto-generated method stub
 		Object dato[]={
 				bola.getEdad().getEdad(),
-				bola.getEnergia().getCantidadTotal(),
+				bola.getEnergia().getCantidadInicial(),
 				bola.getGenero(),
 				bola.getClase(),
 				bola.getEvolucion().getEvolucion()

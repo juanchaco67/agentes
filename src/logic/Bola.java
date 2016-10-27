@@ -19,7 +19,7 @@ public class Bola extends Thread {
 
 
 	public Bola(Coordenada coordenada, int tama, double direccion,
-			double velocidad, Area area,byte opcion) {
+			double velocidad, Area area,byte opcion,int evolucionTiempo,int energiaInicial) {
 
 		this.coordenada = coordenada;
 		this.tama = tama;
@@ -29,9 +29,9 @@ public class Bola extends Thread {
 		this.genero=Genero.aleatorioGenero();
 		this.clase=Clase.aleatorioClase();
 		elegirColor();
-		this.evolucion=new EvolucionBola(this,opcion);
+		this.evolucion=new EvolucionBola(this,opcion,evolucionTiempo);
 		this.edad=new Edad(this);
-		this.energia=new Energia(100,0);
+		this.energia=new Energia(energiaInicial,0);
 		this.edad.start();
 		this.evolucion.start();
 		this.energia.start();

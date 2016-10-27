@@ -2,12 +2,14 @@ package logic;
 
 public class EvolucionBola extends Thread{
 	private Bola bola;
-	private static final int TIEMPO=20000;
+
 	private Evolucion evolucion;
 	private boolean comenzar;
-	public EvolucionBola(Bola bola,byte opcion) {
+	private int tiempo;
+	public EvolucionBola(Bola bola,byte opcion,int tiempo) {
 		// TODO Auto-generated constructor stub
 		this.bola=bola;
+		this.tiempo=tiempo;
 		if(opcion==1)
 			this.evolucion=Evolucion.aleatorioEvolucion();
 		else
@@ -25,7 +27,7 @@ public class EvolucionBola extends Thread{
 
 				for (Evolucion evol:Evolucion.values()) {
 					addTam();
-					Thread.sleep(TIEMPO);
+					Thread.sleep(tiempo);
 					switch (evolucion) {
 					case NACE:						
 						evolucion=Evolucion.INFANCIA;						
