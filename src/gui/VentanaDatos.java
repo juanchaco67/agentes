@@ -54,7 +54,7 @@ public class VentanaDatos extends JDialog implements ActionListener{
 		jLabel1.setText("CANTIDAD DE LA POBLACION (int)");
 		getContentPane().add(jLabel1);
 
-		txtPoblacion.setText("1000");
+		txtPoblacion.setText("100");
 
 		getContentPane().add(txtPoblacion);
 

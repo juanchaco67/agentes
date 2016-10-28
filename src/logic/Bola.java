@@ -76,33 +76,7 @@ public class Bola extends Thread {
 				&& coordenada.getY()+tama>=bola.getCoordenada().getY() 
 				&& coordenada.getY()+tama<=bola.getCoordenada().getY()+bola.getTama();
 	}
-//	/**
-//	 * este metodo cambia el tamaño del agente de acuerdo a la evoucion por etapas 
-//	 */
-//	public void cambiarTama(){
-//		switch (evolucion.getEvolucion()) {
-//		case NACE:
-//			tama
-//			break;	
-//		case INFANCIA:
-//		
-//			break;
-//		case ADOLECENCIA:
-//		
-//			break;
-//		case ADULTOS:
-//			
-//			break;
-//		case VEJEZ:
-//		
-//			break;
-//		case MUERE:
-//		
-//			break;
-//		}
-//		}
-//	}
-//	
+
 	public boolean murio(){
 		return evolucion.getEvolucion()==Evolucion.MUERE;
 	}
