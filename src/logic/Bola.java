@@ -19,7 +19,11 @@ public class Bola extends Thread {
 
 
 	public Bola(Coordenada coordenada, int tama, double direccion,
+<<<<<<< HEAD
 			double velocidad, Area area,byte opcion,int evolucionTiempo,int energiaInicial) {
+=======
+			double velocidad, Area area,byte opcion,int tiempoEvolucion,int cantidadEnergia) {
+>>>>>>> 1df22e6842f26450bb83d412c991984587712c38
 
 		this.coordenada = coordenada;
 		this.tama = tama;
@@ -29,9 +33,15 @@ public class Bola extends Thread {
 		this.genero=Genero.aleatorioGenero();
 		this.clase=Clase.aleatorioClase();
 		elegirColor();
+<<<<<<< HEAD
 		this.evolucion=new EvolucionBola(this,opcion,evolucionTiempo);
 		this.edad=new Edad(this);
 		this.energia=new Energia(energiaInicial,0);
+=======
+		this.evolucion=new EvolucionBola(this,opcion,tiempoEvolucion);
+		this.edad=new Edad(this);
+		this.energia=new Energia(cantidadEnergia,0);
+>>>>>>> 1df22e6842f26450bb83d412c991984587712c38
 		this.edad.start();
 		this.evolucion.start();
 		this.energia.start();
@@ -55,8 +65,10 @@ public class Bola extends Thread {
 				Thread.sleep((long)(DISTANCIA*1000/velocidad));
 				
 				coordenada.mover(DISTANCIA,direccion);
-				if(!this.area.coordenadaAdentro(coordenada,this)){//esta afuera
-					this.direccion+=random.nextDouble()*Math.PI;			
+				if(!this.area.coordenadaAdentro(this)){//esta afuera
+					
+					this.direccion+=random.nextDouble()*Math.PI;					
+					coordenada.mover(0,direccion);
 				}		
 			} catch (InterruptedException e) {
 
@@ -65,6 +77,7 @@ public class Bola extends Thread {
 
 		}
 	}
+<<<<<<< HEAD
 	/**
 	 * Metodo que comprueba si hubo colision entre dos agentes
 	 * @param bola
@@ -76,6 +89,9 @@ public class Bola extends Thread {
 				&& coordenada.getY()+tama>=bola.getCoordenada().getY() 
 				&& coordenada.getY()+tama<=bola.getCoordenada().getY()+bola.getTama();
 	}
+=======
+
+>>>>>>> 1df22e6842f26450bb83d412c991984587712c38
 
 	public boolean murio(){
 		return evolucion.getEvolucion()==Evolucion.MUERE;
