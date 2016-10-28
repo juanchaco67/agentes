@@ -2,8 +2,8 @@ package controlador;
 
 import java.util.ArrayList;
 import java.util.Random;
-import gui.Ventana;
 
+import gui.VentanaDatos;
 import logic.Alicanola;
 import logic.Area;
 import logic.Bola;
@@ -12,7 +12,8 @@ import logic.Fisfirufa;
 
 public class BolaListener {
 
-	private Ventana ventana;
+	@SuppressWarnings("unused")
+	private VentanaDatos ventana;
 	private ArrayList<Bola> bola;
 	private ArrayList<Alicanola>alicanolas;
 	private ArrayList<Fisfirufa>fisfirufas;
@@ -24,19 +25,16 @@ public class BolaListener {
 		this.bola=new ArrayList<Bola>();
 		this.alicanolas=new ArrayList<Alicanola>();
 		this.fisfirufas=new ArrayList<Fisfirufa>();
-		
-		for (int i = 0; i < 1000; i++) {
-			crearPispirispi(1);
-		}
-		this.ventana=new Ventana(this);	
+		this.datos=new int [6];
+		this.ventana=new VentanaDatos(this);
 	}
-	
+
 	public void addDatos(int i,int dato){
 		datos[i]=dato;
 	}
-	
+
 	public void crearPispirispi(int opcion){
-		Bola bol=new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 750, new Coordenada(0, 0)),(byte)opcion,30000,100);
+		Bola bol=new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 750, new Coordenada(0, 0)),(byte)opcion,datos[4],datos[1]);
 		bol.start();
 		bola.add(bol);		
 	}
@@ -57,13 +55,6 @@ public class BolaListener {
 	}
 
 
-	public Ventana getVentana() {
-		return ventana;
-	}
-
-	public void setVentana(Ventana ventana) {
-		this.ventana = ventana;
-	}
 
 	public ArrayList<Bola> getBola() {
 		return bola;
@@ -104,6 +95,6 @@ public class BolaListener {
 	public void setDatos(int[] datos) {
 		this.datos = datos;
 	}
-	
-	
+
+
 }

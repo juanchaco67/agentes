@@ -19,8 +19,8 @@ public class ContextoAlicanola extends Thread{
 		super.run();
 		while(true){			
 			try {
-				Thread.sleep(2000);
-				for (int i = 0; i <random.nextInt(4)+1; i++) {
+				Thread.sleep(bolaListener.getDatos()[2]);
+				for (int i = 0; i <random.nextInt(bolaListener.getDatos()[3])+1; i++) {
 					bolaListener.crearAlicanola();
 				}
 

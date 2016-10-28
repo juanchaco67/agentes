@@ -36,7 +36,6 @@ public class Alicanola extends Thread{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub	
-		System.out.println("radio "+(radio+(velocidad/velocidadAngular()))+" ");
 		super.run();
 		while(true){
 			
