@@ -18,6 +18,8 @@ public class BolaListener {
 	private ArrayList<Alicanola>alicanolas;
 	private ArrayList<Fisfirufa>fisfirufas;
 	private Random random;
+	private ThreadEnergia hiloEnergia;
+
 	private int datos[];
 	public BolaListener() {
 		// TODO Auto-generated constructor stub
@@ -27,6 +29,9 @@ public class BolaListener {
 		this.fisfirufas=new ArrayList<Fisfirufa>();
 		this.datos=new int [6];
 		this.ventana=new VentanaDatos(this);
+		this.hiloEnergia=new ThreadEnergia(this);
+		this.hiloEnergia.start();
+
 	}
 
 	public void addDatos(int i,int dato){
