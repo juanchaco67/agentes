@@ -31,31 +31,21 @@ public class Ventana extends JFrame implements VistaVentana{
 		panel = new Panel(this.bolaListener,this);
 		jScrollPane1 = new javax.swing.JScrollPane();
 		tabla = new javax.swing.JTable();
-		modelo=new DefaultTableModel();
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		modelo=new DefaultTableModel();	
 		getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
-
-		panel.setPreferredSize(new java.awt.Dimension(800, 800));
-		panel.setRequestFocusEnabled(false);
-
-		javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-		panel.setLayout(panelLayout);
-		panelLayout.setHorizontalGroup(
-				panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 424, Short.MAX_VALUE)
-				);
-		panelLayout.setVerticalGroup(
-				panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 400, Short.MAX_VALUE)
-				);
-
+		panel.setLayout(null);
 		getContentPane().add(panel);	
 		modelo.addColumn("EDAD");
 		modelo.addColumn("ENERGIA(100e)");
 		modelo.addColumn("GENERO");
 		modelo.addColumn("CLASE");	
 		modelo.addColumn("EVOLUCION");	
-		
+		modelo.addColumn("NACIMIENTOS");
+		modelo.addColumn("MUERTOS");
+		modelo.addColumn("ALICANOLAS");
+		modelo.addColumn("FISFIRUFAS");
+
+
 		tabla.setModel(modelo);
 		tabla.setPreferredSize(new java.awt.Dimension(100,Toolkit.getDefaultToolkit().getScreenSize().height));
 		jScrollPane1.setViewportView(tabla);
@@ -66,24 +56,45 @@ public class Ventana extends JFrame implements VistaVentana{
 
 	}
 	@Override
-	public void addTabla(Bola bola) {
+	public void addTabla(Bola bola,int i) {
 		// TODO Auto-generated method stub
-		Object dato[]={
+		if(i==1){
+			Object dato[]={
+					bola.getEdad().getEdad(),
+					bola.getEnergia().getCantidadInicial(),
+					bola.getGenero(),
+					bola.getClase(),
+					bola.getEvolucion().getEvolucion(),
+					"",
+					"",
+					"",
+					""
+
+			};
+			modelo.addRow(dato);
+		}else{
+			Object dato[]={
 				bola.getEdad().getEdad(),
 				bola.getEnergia().getCantidadInicial(),
 				bola.getGenero(),
 				bola.getClase(),
-				bola.getEvolucion().getEvolucion()
+				bola.getEvolucion().getEvolucion(),
+				panel.getCantNacimientos(),
+				panel.getCantMuertes(),
+				panel.getCantAlicanolas(),
+				panel.getCantFisfirufas()
+
 		};
 		modelo.addRow(dato);
 	}
-	@Override
-	public void eliminarDatos() {
-		// TODO Auto-generated method stub
-	       int filas=tabla.getRowCount();
-           for (int i = 0;filas>i; i++) {
-        	   
-               modelo.removeRow(0);
-           }
+}
+@Override
+public void eliminarDatos() {
+	// TODO Auto-generated method stub
+	int filas=tabla.getRowCount();
+	for (int i = 0;filas>i; i++) {
+
+		modelo.removeRow(0);
 	}
+}
 }

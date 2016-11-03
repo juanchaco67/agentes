@@ -11,12 +11,12 @@ public class Area {
 		this.alto = alto;
 		this.coordenadaInicial = coordenadaInicial;
 	}
-	public boolean coordenadaAdentro( Bola bola){
+	public boolean coordenadaAdentro(Coordenada coordenada, Bola bola){
 		
-		return (bola.getCoordenada().getX()>this.coordenadaInicial.getX()) &&
-				(bola.getCoordenada().getX()+bola.getTama()<this.coordenadaInicial.getX()+ancho) &&
-				(bola.getCoordenada().getY()>this.coordenadaInicial.getY()) &&
-				(bola.getCoordenada().getY()+bola.getTama()<this.coordenadaInicial.getY()+alto) ;
+		return (coordenada.getX()>this.coordenadaInicial.getX()) &&
+				(coordenada.getX()+bola.getTama()<this.coordenadaInicial.getX()+ancho) &&
+				(coordenada.getY()>this.coordenadaInicial.getY()) &&
+				(coordenada.getY()+(bola.getTama())<this.coordenadaInicial.getY()+alto) ;
 	}
 	public int getAncho() {
 		return ancho;

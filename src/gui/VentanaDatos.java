@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import controlador.BolaListener;
 
@@ -17,10 +18,12 @@ public class VentanaDatos extends JDialog implements ActionListener{
 	private javax.swing.JLabel jLabel3;
 	private javax.swing.JLabel jLabel4;
 	private javax.swing.JLabel jLabel5;
+	private javax.swing.JLabel jLabel6;
 	private javax.swing.JTextField txtCantidadAlicanola;
 	private javax.swing.JTextField txtEnergia;
 	private javax.swing.JTextField txtPoblacion;
 	private javax.swing.JTextField txtTiempoAlicanola;
+	private javax.swing.JTextField txtTiempoEdad;
 	private javax.swing.JTextField txtTiempoEvolucion;
 	private BolaListener bolaListener;
 
@@ -45,20 +48,18 @@ public class VentanaDatos extends JDialog implements ActionListener{
 		txtCantidadAlicanola = new javax.swing.JTextField();
 		jLabel5 = new javax.swing.JLabel();
 		txtTiempoEvolucion = new javax.swing.JTextField();
+		jLabel6 = new javax.swing.JLabel();
+		txtTiempoEdad = new javax.swing.JTextField();
 		btnCancelar = new javax.swing.JButton();
 		btnIniciar = new javax.swing.JButton();
 
 
-		getContentPane().setLayout(new java.awt.GridLayout(6, 2));
+		getContentPane().setLayout(new java.awt.GridLayout(7, 2));
 
 		jLabel1.setText("CANTIDAD DE LA POBLACION (int)");
 		getContentPane().add(jLabel1);
 
-<<<<<<< HEAD
-		txtPoblacion.setText("100");
-=======
 		txtPoblacion.setText("1000");
->>>>>>> 1df22e6842f26450bb83d412c991984587712c38
 
 		getContentPane().add(txtPoblacion);
 
@@ -68,7 +69,7 @@ public class VentanaDatos extends JDialog implements ActionListener{
 		txtEnergia.setText("100");
 		getContentPane().add(txtEnergia);
 
-		jLabel3.setText("TIEMPO PARA APARECER ALICANOLA (int)");
+		jLabel3.setText("TIEMPO PARA APARECER ALICANOLA (int)(milisegundos)");
 		getContentPane().add(jLabel3);
 
 		txtTiempoAlicanola.setText("3000");
@@ -80,11 +81,18 @@ public class VentanaDatos extends JDialog implements ActionListener{
 		txtCantidadAlicanola.setText("4");
 		getContentPane().add(txtCantidadAlicanola);
 
-		jLabel5.setText("TIEMPO EVOLUCION POR ETAPAS (int)");
+		jLabel5.setText("TIEMPO EVOLUCION POR ETAPAS (int)(milisegundos)");
 		getContentPane().add(jLabel5);
 
 		txtTiempoEvolucion.setText("30000");
 		getContentPane().add(txtTiempoEvolucion);
+
+		jLabel6.setText("TIEMPO DE EVOLUCION DE LA EDAD (int)(milisegundos)");
+		getContentPane().add(jLabel6);
+
+		txtTiempoEdad.setText("1000");
+
+		getContentPane().add(txtTiempoEdad);
 
 		btnCancelar.setText("CANCELAR");
 		getContentPane().add(btnCancelar);
@@ -105,14 +113,18 @@ public class VentanaDatos extends JDialog implements ActionListener{
 			bolaListener.addDatos(1,Integer.parseInt(txtEnergia.getText()));
 			bolaListener.addDatos(2,Integer.parseInt(txtTiempoAlicanola.getText()));
 			bolaListener.addDatos(3,Integer.parseInt(txtCantidadAlicanola.getText()));	
-			bolaListener.addDatos(4,Integer.parseInt(txtTiempoEvolucion.getText()));	
-			
-			for (int i = 0; i < bolaListener.getDatos()[0]; i++) {
-				bolaListener.crearPispirispi(1);
-			}
-			
-			new Ventana(bolaListener);
+			bolaListener.addDatos(4,Integer.parseInt(txtTiempoEvolucion.getText()));
+			bolaListener.addDatos(5,Integer.parseInt(txtTiempoEdad.getText()));
+			if(bolaListener.getDatos()[1]>0){
+				for (int i = 0; i < bolaListener.getDatos()[0]; i++) {
+					bolaListener.crearPispirispi(1);
+				}
+			bolaListener.getThreadAlicanola().start();
+			new Ventana(bolaListener);	
 			this.setVisible(false);
+			}else
+				JOptionPane.showMessageDialog(null, "INGRESE UNA ENERGIA MAYOR QUE CERO (ENERGIA > 0)");
+				
 
 		}else{
 			System.exit(0);

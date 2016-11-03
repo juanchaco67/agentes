@@ -20,34 +20,40 @@ import logic.Genero;
 public class Panel extends JPanel implements Runnable {	
 	private VistaVentana vista;
 	private BolaListener bolaListener;
+	private int cantMuertes;
+	private int cantNacimientos;
+	private int cantAlicanolas;
+	private int cantFisfirufas;
 
 	public Panel(BolaListener bolaListener,VistaVentana vista) {
 		// TODO Auto-generated constructor stub
 		this.bolaListener=bolaListener;
-		setBounds(0,0, 800, 600);
-		ContextoAlicanola contextoAlicanola=new ContextoAlicanola(bolaListener);
-		contextoAlicanola.start();
+		setSize(bolaListener.getBola().get(0).getArea().getAncho()-50,bolaListener.getBola().get(0).getArea().getAlto());
+		setPreferredSize(getSize());
 		this.vista=vista;
-	
-
 	}
 
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub	
+
 		g.clearRect(0,0,1000,1000);
+		g.fillRect(0,0,800,750);
+		cantAlicanolas=0;
+		cantFisfirufas=0;		
 		/**
 		 * dibujar fisfirufas
 		 */
 		for (int i = 0; i < bolaListener.getFisfirufas().size(); i++) {
+			cantFisfirufas++;
 			Fisfirufa fisfirufa=bolaListener.getFisfirufas().get(i);
-			g.setColor(Color.BLACK);
+			g.setColor(Color.RED);
 			g.fillOval((int)fisfirufa.getCoordenada().getX(),(int)fisfirufa.getCoordenada().getY(),fisfirufa.getTam(),fisfirufa.getTam());
-
 		}
 		/**
 		 * dibujar alicanola
 		 */
 		for (int i = 0; i < bolaListener.getAlicanolas().size(); i++) {
+			cantAlicanolas++;
 			Alicanola alicanola=bolaListener.getAlicanolas().get(i);
 			g.setColor(Color.ORANGE);
 			g.fillOval((int)alicanola.getCoordenada().getX(),(int)alicanola.getCoordenada().getY(),(int)alicanola.getRadio()*2,(int)alicanola.getRadio()*2);
@@ -64,17 +70,19 @@ public class Panel extends JPanel implements Runnable {
 			Bola bol=bolaListener.getBola().get(i);
 			if(bol.murio()){				
 				bolaListener.getBola().remove(i);
+				cantMuertes++;
 			}else{
-				if(bol.getGenero()==Genero.HEMBRA){
-					vista.addTabla(bol);
-					g.setColor(bol.getColor());
-					g.fillOval((int)bol.getCoordenada().getX(),(int)bol.getCoordenada().getY(),bol.getTama(),bol.getTama());
-				}else{
-					vista.addTabla(bol);
-					g.setColor(bol.getColor());
-					g.fillRect((int)bol.getCoordenada().getX(),(int)bol.getCoordenada().getY(),bol.getTama(),bol.getTama());
-
-				}
+					if(bol.getGenero()==Genero.HEMBRA){						
+						g.setColor(bol.getColor());
+						g.fillOval((int)bol.getCoordenada().getX(),(int)bol.getCoordenada().getY(),bol.getTama(),bol.getTama());
+					}else{						
+						g.setColor(bol.getColor());
+						g.fillRect((int)bol.getCoordenada().getX(),(int)bol.getCoordenada().getY(),bol.getTama(),bol.getTama());
+					}
+					if(i==0)
+						vista.addTabla(bol,0);
+					else
+						vista.addTabla(bol,1);
 			}
 		}
 
@@ -110,6 +118,7 @@ public class Panel extends JPanel implements Runnable {
 									&& bola1.getEvolucion().getEvolucion()==Evolucion.ADULTOS 
 									&& bola2.getEvolucion().getEvolucion()==Evolucion.ADULTOS){
 								bolaListener.crearPispirispi(0);
+								this.cantNacimientos++;
 							}
 							/**
 							 * si son adolecentes y de igual  genero y diferente clase,morira el que 
@@ -139,6 +148,7 @@ public class Panel extends JPanel implements Runnable {
 							bola1.getEnergia().adicionarEnergia();
 							bolaListener.crearFIsfirufas();
 							bolaListener.eliminarALicanola(h);
+							this.cantAlicanolas--;
 						}
 					}			
 					/**
@@ -150,8 +160,10 @@ public class Panel extends JPanel implements Runnable {
 								getBounds((int)fisfirufa.getCoordenada().getX(),(int)fisfirufa.getCoordenada().getY(),(int)fisfirufa.getTam()))){
 							//aqui toka disminuir la energia de la bola	
 							bola1.getEnergia().disminuirEnergia();
-							if(bola1.getClase()==Clase.INOPIOS && bola1.getEvolucion().getEvolucion()==Evolucion.ADULTOS)
-								bolaListener.eliminarFisfirifuna(j);							
+							if(bola1.getClase()==Clase.INOPIOS && bola1.getEvolucion().getEvolucion()==Evolucion.ADULTOS){
+								bolaListener.eliminarFisfirifuna(j);
+								this.cantFisfirufas--;
+							}
 						}
 					}
 					/**
@@ -173,5 +185,38 @@ public class Panel extends JPanel implements Runnable {
 	private  boolean colision(int x,int y ,int diametro,Rectangle r){
 		return getBounds(x, y, diametro).intersects(r);
 	}
+
+	public int getCantMuertes() {
+		return cantMuertes;
+	}
+
+	public void setCantMuertes(int cantMuertes) {
+		this.cantMuertes = cantMuertes;
+	}
+
+	public int getCantNacimientos() {
+		return cantNacimientos;
+	}
+
+	public void setCantNacimientos(int cantNacimientos) {
+		this.cantNacimientos = cantNacimientos;
+	}
+
+	public int getCantAlicanolas() {
+		return cantAlicanolas;
+	}
+
+	public void setCantAlicanolas(int cantAlicanolas) {
+		this.cantAlicanolas = cantAlicanolas;
+	}
+
+	public int getCantFisfirufas() {
+		return cantFisfirufas;
+	}
+
+	public void setCantFisfirufas(int cantFisfirufas) {
+		this.cantFisfirufas = cantFisfirufas;
+	}
+
 
 }

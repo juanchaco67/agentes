@@ -2,11 +2,12 @@ package logic;
 
 public class Edad extends Thread {
 	private Bola bola;
-	private static final int TIEMPO=1000;
 	private int edad;
-	public Edad(Bola bola) {
+	private int tiempo;
+	public Edad(Bola bola,int tiempo) {
 		// TODO Auto-generated constructor stub
 		this.bola=bola;
+		this.tiempo=tiempo;
 	}
 	@Override
 	public void run() {
@@ -16,7 +17,7 @@ public class Edad extends Thread {
 			try {
 				edad+=1;
 				bola.setTama(bola.getTama()+1);
-				Thread.sleep(TIEMPO);
+				Thread.sleep(tiempo);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

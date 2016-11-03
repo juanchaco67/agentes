@@ -2,17 +2,10 @@ package logic;
 
 public class EvolucionBola extends Thread{
 	private Bola bola;
-<<<<<<< HEAD
 
 	private Evolucion evolucion;
 	private boolean comenzar;
 	private int tiempo;
-=======
-	private	 int tiempo=30000;
-	private Evolucion evolucion;
-	private boolean comenzar;
-	
->>>>>>> 1df22e6842f26450bb83d412c991984587712c38
 	public EvolucionBola(Bola bola,byte opcion,int tiempo) {
 		// TODO Auto-generated constructor stub
 		this.bola=bola;
