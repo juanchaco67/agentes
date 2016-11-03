@@ -9,15 +9,22 @@ public class EvolucionBola extends Thread{
 	private int evolAntes;
 	private int evolDespues;
 	
+	
 	public EvolucionBola(Bola bola,byte opcion,int tiempo) {
 		// TODO Auto-generated constructor stub
 		this.bola=bola;
 		this.tiempo=tiempo;
-		if(opcion==1)
+		if(opcion==1){
 			this.evolucion=Evolucion.aleatorioEvolucion();
-		else
+			this.evolAntes=0;
+			this.evolDespues=0;
+		}else{
 			this.evolucion=Evolucion.NACE;
-		this.comenzar=true;
+			this.evolAntes=0;
+			this.evolDespues=10;
+		}this.comenzar=true;
+		
+	
 		
 	}
 
@@ -40,6 +47,7 @@ public class EvolucionBola extends Thread{
 						this.evolDespues=10;
 						bola.setTama(bola.getTama()+5);	
 						bola.setVelocidad(50);	
+						bola.setAbsorbio(false);
 						break;	
 					case INFANCIA:
 						evolucion=Evolucion.ADOLECENCIA;	
@@ -47,6 +55,7 @@ public class EvolucionBola extends Thread{
 						this.evolDespues=20;
 						bola.setTama(bola.getTama()+10);	
 						bola.setVelocidad(200);
+						bola.setAbsorbio(false);
 						break;
 					case ADOLECENCIA:
 						evolucion=Evolucion.ADULTOS;
@@ -54,6 +63,7 @@ public class EvolucionBola extends Thread{
 						this.evolDespues=40;
 						bola.setTama(bola.getTama()+20);
 						bola.setVelocidad(300);
+						bola.setAbsorbio(false);
 						break;
 					case ADULTOS:
 						evolucion=Evolucion.VEJEZ;	
@@ -61,6 +71,7 @@ public class EvolucionBola extends Thread{
 						this.evolDespues=60;
 						bola.setTama(bola.getTama()+25);	
 						bola.setVelocidad(100);
+						bola.setAbsorbio(false);
 						break;
 					case VEJEZ:						
 						evolucion=Evolucion.MUERE;	
@@ -68,6 +79,7 @@ public class EvolucionBola extends Thread{
 						this.evolDespues=0;
 						bola.setTama(0);	
 						bola.setVelocidad(0);
+						bola.setAbsorbio(false);
 						break;
 					case MUERE:				
 						comenzar=false;
@@ -89,41 +101,47 @@ public class EvolucionBola extends Thread{
 	@SuppressWarnings("incomplete-switch")
 	private void addTam(){
 		switch (evolucion) {
-		case NACE:
-			bola.getEdad().setEdad(1);
-			bola.setTama(bola.getTama()+5);	
-			bola.setVelocidad(50);	
+		case NACE:						
+			
 			this.evolAntes=0;
 			this.evolDespues=10;
+			bola.setTama(bola.getTama()+5);	
+			bola.setVelocidad(50);	
+			bola.setAbsorbio(false);
 			break;	
 		case INFANCIA:
-			bola.getEdad().setEdad(10);
-			bola.setTama(bola.getTama()+10);	
-			bola.setVelocidad(200);
+		
 			this.evolAntes=10;
 			this.evolDespues=20;
+			bola.setTama(bola.getTama()+10);	
+			bola.setVelocidad(200);
+			bola.setAbsorbio(false);
 			break;
 		case ADOLECENCIA:
-			bola.getEdad().setEdad(20);
-			bola.setTama(bola.getTama()+15);	
-			bola.setVelocidad(380);
+		
 			this.evolAntes=20;
 			this.evolDespues=40;
-			break;
-		case ADULTOS:
-			bola.getEdad().setEdad(40);
 			bola.setTama(bola.getTama()+20);
 			bola.setVelocidad(300);
+			bola.setAbsorbio(false);
+			break;
+		case ADULTOS:
+		
 			this.evolAntes=40;
 			this.evolDespues=60;
-			break;
-		case VEJEZ:
-			bola.getEdad().setEdad(60);
 			bola.setTama(bola.getTama()+25);	
 			bola.setVelocidad(100);
+			bola.setAbsorbio(false);
+			break;
+		case VEJEZ:						
+		
 			this.evolAntes=60;
 			this.evolDespues=0;
-			break;		
+			bola.setTama(0);	
+			bola.setVelocidad(0);
+			bola.setAbsorbio(false);
+			break;
+
 		}
 	}
 	public void cambioEvolucion(Evolucion evolucion){
@@ -165,6 +183,7 @@ public class EvolucionBola extends Thread{
 	public void setTiempo(int tiempo) {
 		this.tiempo = tiempo;
 	}
+
 
 
 

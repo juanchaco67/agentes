@@ -68,7 +68,11 @@ public class Panel extends JPanel implements Runnable {
 		for (int i = 0; i < bolaListener.getBola().size(); i++) {	
 
 			Bola bol=bolaListener.getBola().get(i);
-			if(bol.murio()){				
+			if(bol.murio()){			
+				bol.getEdad().stop();
+				bol.getEnergia().stop();
+				bol.getEvolucion().stop();
+				bol.stop();	
 				bolaListener.getBola().remove(i);
 				cantMuertes++;
 			}else{
@@ -107,8 +111,19 @@ public class Panel extends JPanel implements Runnable {
 					for (int j = 0; j < bolaListener.getBola().size(); j++) {
 						bola2=bolaListener.getBola().get(j);
 
+					
+						
 						if(colision((int)bola1.getCoordenada().getX(),(int)bola1.getCoordenada().getY(),(int)bola1.getTama(),
 								getBounds((int)bola2.getCoordenada().getX(),(int)bola2.getCoordenada().getY(),(int)bola2.getTama())) && i!=j){
+							/**
+							 * pispirispi de menor dedad y de clase diferente 
+							 */
+							if(bola1.getEdad().getEdad()<bola2.getEdad().getEdad()
+									&& bola1.getClase()!=bola2.getClase()){
+//								bola1.getEvolucion().setPasa(true);
+							}
+						
+							
 							/**
 							 *Si son diferente genero  y de la misma clase y estan en estapa adulto
 							 *generan un nuevo pisppirispi  de la misma clase
@@ -129,9 +144,20 @@ public class Panel extends JPanel implements Runnable {
 									&& bola1.getGenero()==bola2.getGenero()
 									&& bola1.getClase()!=bola2.getClase()){
 								if(bola1.getEnergia().getCantidadInicial()<bola2.getEnergia().getCantidadInicial())
+								{
+									bola1.getEdad().stop();
+									bola1.getEnergia().stop();
+									bola1.getEvolucion().stop();
+									bola1.stop();									
 									bolaListener.getBola().remove(i);
-								else
+									
+								}else{
+									bola2.getEdad().stop();
+									bola2.getEnergia().stop();
+									bola2.getEvolucion().stop();
+									bola2.stop();	
 									bolaListener.getBola().remove(j);
+								}
 							}
 						}
 					}
@@ -169,8 +195,13 @@ public class Panel extends JPanel implements Runnable {
 					/**
 					 * eliminar bola cunado tenga una energia de cero
 					 */
-					if(bola1.getEnergia().getCantidadInicial()<=0)
-						bolaListener.getBola().remove(i);					
+					if(bola1.getEnergia().getCantidadInicial()<=0){
+						bola1.getEdad().stop();
+						bola1.getEnergia().stop();
+						bola1.getEvolucion().stop();
+						bola1.stop();	
+						bolaListener.getBola().remove(i);			
+					}
 				}
 				repaint();
 			}catch (Exception e) {

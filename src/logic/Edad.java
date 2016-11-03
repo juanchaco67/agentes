@@ -1,5 +1,7 @@
 package logic;
 
+import javax.swing.JOptionPane;
+
 public class Edad extends Thread {
 	private Bola bola;
 	private int edad;
@@ -13,11 +15,17 @@ public class Edad extends Thread {
 	public void run() {
 		// TODO Auto-generated method stub
 		super.run();
-		while(true){			
+		int numero=0;
+		while(true){	
+			
 			try {
+				numero=Math.abs((bola.getEvolucion().getEvolDespues()-bola.getEvolucion().getEvolAntes()));
+				if(numero==0)
+					JOptionPane.showMessageDialog(null,"cero "+bola.getEvolucion().getEvolDespues()+" "+bola.getEvolucion().getEvolAntes()
+							+" "+bola.getEvolucion().getEvolucion());
 				edad+=1;
 				bola.setTama(bola.getTama()+1);
-				Thread.sleep((bola.getEvolucion().getTiempo())/(Math.abs((bola.getEvolucion().getEvolDespues()-bola.getEvolucion().getEvolAntes()))));
+				Thread.sleep(bola.getEvolucion().getTiempo()/numero);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -16,6 +16,7 @@ public class Bola extends Thread {
 	private EvolucionBola evolucion;
 	private Edad edad;
 	private Energia energia;
+	private boolean absorbio;
 
 
 	public Bola(Coordenada coordenada, int tama, double direccion
@@ -32,9 +33,12 @@ public class Bola extends Thread {
 		this.edad=new Edad(this);
 		this.energia=new Energia(energiaInicial,0);
 	
-		this.evolucion.start();
-		this.edad.start();
+		this.evolucion.start();	
 		this.energia.start();
+		this.edad.start();
+		this.absorbio=false;
+
+		
 		
 	}
 	private void  elegirColor(){
@@ -148,6 +152,12 @@ public class Bola extends Thread {
 	}
 	public void setEnergia(Energia energia) {
 		this.energia = energia;
+	}
+	public boolean isAbsorbio() {
+		return absorbio;
+	}
+	public void setAbsorbio(boolean absorbio) {
+		this.absorbio = absorbio;
 	}
 
 

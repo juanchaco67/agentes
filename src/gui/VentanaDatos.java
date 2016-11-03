@@ -53,7 +53,7 @@ public class VentanaDatos extends JDialog implements ActionListener{
 		btnIniciar = new javax.swing.JButton();
 
 
-		getContentPane().setLayout(new java.awt.GridLayout(7, 2));
+		getContentPane().setLayout(new java.awt.GridLayout(6, 2));
 
 		jLabel1.setText("CANTIDAD DE LA POBLACION (int)");
 		getContentPane().add(jLabel1);
