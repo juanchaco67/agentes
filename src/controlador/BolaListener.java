@@ -30,7 +30,7 @@ public class BolaListener {
 		this.bola=new ArrayList<Bola>();
 		this.alicanolas=new ArrayList<Alicanola>();
 		this.fisfirufas=new ArrayList<Fisfirufa>();
-		this.datos=new int [6];
+		this.datos=new int [5];
 		this.ventana=new VentanaDatos(this);
 		this.hiloEnergia=new ThreadEnergia(this);
 		this.hiloEnergia.start();
@@ -43,7 +43,7 @@ public class BolaListener {
 	}
 
 	public void crearPispirispi(int opcion){
-		Bola bol=new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),new Area(800, 750, new Coordenada(0, 0)),(byte)opcion,datos[4],datos[1],datos[5]);
+		Bola bol=new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),new Area(800, 750, new Coordenada(0, 0)),(byte)opcion,datos[4],datos[1]);
 		bol.start();
 		bola.add(bol);		
 	}

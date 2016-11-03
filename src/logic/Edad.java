@@ -3,11 +3,11 @@ package logic;
 public class Edad extends Thread {
 	private Bola bola;
 	private int edad;
-	private int tiempo;
-	public Edad(Bola bola,int tiempo) {
+
+	public Edad(Bola bola) {
 		// TODO Auto-generated constructor stub
 		this.bola=bola;
-		this.tiempo=tiempo;
+	
 	}
 	@Override
 	public void run() {
