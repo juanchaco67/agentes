@@ -17,7 +17,7 @@ public class Edad extends Thread {
 			try {
 				edad+=1;
 				bola.setTama(bola.getTama()+1);
-				Thread.sleep(tiempo);
+				Thread.sleep((bola.getEvolucion().getTiempo())/(Math.abs((bola.getEvolucion().getEvolDespues()-bola.getEvolucion().getEvolAntes()))));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -43,7 +43,7 @@ public class BolaListener {
 	}
 
 	public void crearPispirispi(int opcion){
-		Bola bol=new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),100+random.nextDouble()*400,new Area(800, 750, new Coordenada(0, 0)),(byte)opcion,datos[4],datos[1],datos[5]);
+		Bola bol=new Bola(new Coordenada(random.nextDouble()*800,random.nextDouble()*750),5,Math.toRadians(random.nextDouble()*2*Math.PI),new Area(800, 750, new Coordenada(0, 0)),(byte)opcion,datos[4],datos[1],datos[5]);
 		bol.start();
 		bola.add(bol);		
 	}
