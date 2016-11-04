@@ -17,11 +17,12 @@ public class Bola extends Thread {
 	private Edad edad;
 	private Energia energia;
 	private boolean absorbio;
+	private boolean colision;
 
 
 	public Bola(Coordenada coordenada, int tama, double direccion
 		, Area area,byte opcion,int evolucionTiempo,int energiaInicial) {
-
+		this.colision=false;
 		this.coordenada = coordenada;
 		this.tama = tama;
 		this.direccion = direccion;
@@ -29,14 +30,15 @@ public class Bola extends Thread {
 		this.genero=Genero.aleatorioGenero();
 		this.clase=Clase.aleatorioClase();
 		elegirColor();
-		this.evolucion=new EvolucionBola(this,opcion,evolucionTiempo);
 		this.edad=new Edad(this);
-		this.energia=new Energia(energiaInicial,0);
+		this.evolucion=new EvolucionBola(this,opcion,evolucionTiempo);
+				this.energia=new Energia(energiaInicial,0);
 	
 		this.evolucion.start();	
 		this.energia.start();
 		this.edad.start();
 		this.absorbio=false;
+	
 
 		
 		
@@ -158,6 +160,12 @@ public class Bola extends Thread {
 	}
 	public void setAbsorbio(boolean absorbio) {
 		this.absorbio = absorbio;
+	}
+	public boolean isColision() {
+		return colision;
+	}
+	public void setColision(boolean colision) {
+		this.colision = colision;
 	}
 
 

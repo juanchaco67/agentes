@@ -1,6 +1,5 @@
 package logic;
 
-import javax.swing.JOptionPane;
 
 public class Edad extends Thread {
 	private Bola bola;
@@ -20,9 +19,6 @@ public class Edad extends Thread {
 			
 			try {
 				numero=Math.abs((bola.getEvolucion().getEvolDespues()-bola.getEvolucion().getEvolAntes()));
-				if(numero==0)
-					JOptionPane.showMessageDialog(null,"cero "+bola.getEvolucion().getEvolDespues()+" "+bola.getEvolucion().getEvolAntes()
-							+" "+bola.getEvolucion().getEvolucion());
 				edad+=1;
 				bola.setTama(bola.getTama()+1);
 				Thread.sleep(bola.getEvolucion().getTiempo()/numero);
