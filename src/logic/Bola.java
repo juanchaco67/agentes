@@ -16,13 +16,16 @@ public class Bola extends Thread {
 	private EvolucionBola evolucion;
 	private Edad edad;
 	private Energia energia;
-	private boolean absorbio;
+	private boolean colisionFisfirifuna;
+
 	private boolean colision;
 
 
 	public Bola(Coordenada coordenada, int tama, double direccion
-		, Area area,byte opcion,int evolucionTiempo,int energiaInicial) {
+			, Area area,byte opcion,int evolucionTiempo,int energiaInicial) {
 		this.colision=false;
+		this.colisionFisfirifuna=false;
+
 		this.coordenada = coordenada;
 		this.tama = tama;
 		this.direccion = direccion;
@@ -32,25 +35,25 @@ public class Bola extends Thread {
 		elegirColor();
 		this.edad=new Edad(this);
 		this.evolucion=new EvolucionBola(this,opcion,evolucionTiempo);
-				this.energia=new Energia(energiaInicial,0);
-	
+		this.energia=new Energia(energiaInicial,0);
+
 		this.evolucion.start();	
 		this.energia.start();
 		this.edad.start();
-		this.absorbio=false;
-	
 
-		
-		
+
+
+
+
 	}
 	private void  elegirColor(){
 		switch (clase) {
 		case TROPUS:
-				color=Color.YELLOW;
+			color=Color.YELLOW;
 			break;
 
 		case INOPIOS:
-				color=Color.GREEN;
+			color=Color.GREEN;
 			break;
 		}
 	}
@@ -59,32 +62,22 @@ public class Bola extends Thread {
 		while(!murio()){
 			try {
 				Thread.sleep((long)(DISTANCIA*1000/velocidad));
-				
+				/**
+				 * esta afuera
+				 */
+				if(!this.area.coordenadaAdentro(coordenada,this))	
+					this.direccion+=random.nextDouble()*2*Math.PI;	
 				coordenada.mover(DISTANCIA,direccion);
-				if(!this.area.coordenadaAdentro(coordenada,this)){//esta afuera					
-					coordenada.mover(-tama,direccion);
-					this.direccion+=random.nextDouble()*2*Math.PI;					
-				}		
-			} catch (InterruptedException e) {
 
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
 		}
 	}
 
-	/**
-	 * Metodo que comprueba si hubo colision entre dos agentes
-	 * @param bola
-	 * @return
-	 */
-	public boolean colision(Bola bola) {	
-		return coordenada.getX()+tama>=bola.getCoordenada().getX() 
-				&& coordenada.getX()+tama<=bola.getCoordenada().getX()+bola.getTama()
-				&& coordenada.getY()+tama>=bola.getCoordenada().getY() 
-				&& coordenada.getY()+tama<=bola.getCoordenada().getY()+bola.getTama();
-	}
-	
+
+
 
 	public boolean murio(){
 		return evolucion.getEvolucion()==Evolucion.MUERE;
@@ -155,19 +148,19 @@ public class Bola extends Thread {
 	public void setEnergia(Energia energia) {
 		this.energia = energia;
 	}
-	public boolean isAbsorbio() {
-		return absorbio;
-	}
-	public void setAbsorbio(boolean absorbio) {
-		this.absorbio = absorbio;
-	}
+
 	public boolean isColision() {
 		return colision;
 	}
 	public void setColision(boolean colision) {
 		this.colision = colision;
 	}
-
+	public boolean isColisionFisfirifuna() {
+		return colisionFisfirifuna;
+	}
+	public void setColisionFisfirifuna(boolean colisionFisfirifuna) {
+		this.colisionFisfirifuna = colisionFisfirifuna;
+	}
 
 
 

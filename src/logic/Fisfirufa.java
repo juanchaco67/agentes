@@ -3,9 +3,11 @@ package logic;
 public class Fisfirufa {
 	private int tam;
 	private Coordenada coordenada;
+	private boolean colisionFisfirufa;
 
 	public Fisfirufa(int tam, Coordenada coordenada) {
 		super();
+		this.colisionFisfirufa=false;
 		this.tam = tam;
 		this.coordenada = coordenada;
 	}
@@ -31,6 +33,12 @@ public class Fisfirufa {
 	}
 	public void setCoordenada(Coordenada coordenada) {
 		this.coordenada = coordenada;
+	}
+	public boolean isColisionFisfirufa() {
+		return colisionFisfirufa;
+	}
+	public void setColisionFisfirufa(boolean colisionFisfirufa) {
+		this.colisionFisfirufa = colisionFisfirufa;
 	}
 	
 }
